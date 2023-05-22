@@ -140,7 +140,7 @@ spec:
         - name: LONGHORN_NAMESPACE
           value: longhorn-system
         image: longhornio/longhorn-manager:master-head
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         name: longhorn-uninstall
       restartPolicy: Never
       serviceAccountName: longhorn-uninstall-service-account

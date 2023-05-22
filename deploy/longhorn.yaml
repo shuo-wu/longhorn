@@ -110,7 +110,7 @@ data:
       dataLocality: "disabled"
       unmapMarkSnapChainRemoved: "ignored"
       disableRevisionCounter: "true"
-      dataEngine: "v1"
+      dataEngine: "v2"
       backupTargetName: "default"
 ---
 # Source: longhorn/templates/crds.yaml
@@ -4065,14 +4065,14 @@ metadata:
   name: longhorn-frontend
   namespace: longhorn-system
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: longhorn-ui
   ports:
   - name: http
     port: 80
     targetPort: http
-    nodePort: null
+    nodePort: 30000
 ---
 # Source: longhorn/templates/services.yaml
 apiVersion: v1
@@ -4140,7 +4140,7 @@ spec:
       containers:
       - name: longhorn-manager
         image: longhornio/longhorn-manager:master-head
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         securityContext:
           privileged: true
         command:
@@ -4268,7 +4268,7 @@ spec:
       containers:
         - name: longhorn-driver-deployer
           image: longhornio/longhorn-manager:master-head
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           command:
           - longhorn-manager
           - -d
@@ -4347,7 +4347,7 @@ spec:
       containers:
       - name: longhorn-ui
         image: longhornio/longhorn-ui:master-head
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         volumeMounts:
         - name: nginx-cache
           mountPath: /var/cache/nginx/
